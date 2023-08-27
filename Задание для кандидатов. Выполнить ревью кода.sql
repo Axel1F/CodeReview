@@ -9,18 +9,18 @@ begin
 -- Проверка на корректность загрузки
 	if not exists (
 	select 1
-	from syn.ImportFile as f
+	from syn.ImportFile as f -- некорретное наименование алиаса должно быть "ImF"
 	where f.ID = @ID_Record
 		and f.FlagLoaded = cast(1 as bit)
 	)
 		begin
 			set @ErrorMessage = 'Ошибка при загрузке файла, проверьте корректность данных'
 
-			raiserror(@ErrorMessage, 3, 1)
-			return
+			raiserror(@ErrorMessage, 3, 1)    
+			return         -- отсутствует пустая строка перед return
 		end
 
-	CREATE TABLE #ProcessedRows (
+	CREATE TABLE #ProcessedRows ( -- некорретное наименование таблицы (не указана схема)
 		ActionType varchar(255),
 		ID int
 	)
